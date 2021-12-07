@@ -1,11 +1,26 @@
 <template>
   <table>
+    <tr>
+      <th>Név</th>
+      <th>Ár</th>
+      <th>Darabszám</th>
+      <th>Összértékét</th>
+      <th>Operations</th>
+    </tr>
     <TableItem
       v-for="row in rows"
       v-bind:key="row.title"
       :row="row"
       @selected-row-changed="Changed"
+      @row-item-deleted="Deleted"
+      @new-row-created="New"
     />
+    <tr>
+      <td><input type="text"></td>
+      <td><input type="text"></td>
+      <td><input type="text"></td>
+      <td><button @click="New">New</button></td>
+    </tr>
   </table>
 </template>
 
@@ -19,25 +34,17 @@ export default {
       TableItem.$emit("selected-title-changed", e)
       TableItem.$emit("selected-price-changed", e)
       TableItem.$emit("selected-quantity-changed", e)
+    },
+    Deleted(e) {
+      this.$emit("row-item-deleted", e)
+    },
+    New() {
+      this.$emit('new-row-created', {
+        title: this.title,
+        price: this.price,
+        quantity: this.quantity
+      })
     }
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>

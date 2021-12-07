@@ -1,18 +1,19 @@
 <template>
     <div>
         <tr>
-            <th>{{title}}</th>
+            <td>{{title}}</td>
             <td>{{price}}</td>
             <td>{{quantity}}</td>
+            <td>{{quantity * price}}</td>
             <td v-if="edit">Operations</td>
             <td v-if="!edit"><button @click="Edit">Edit</button></td>
         </tr>
         <tr v-if="edit">
-            <th><input type="text" v-model="title"></th>
+            <td><input type="text" v-model="title"></td>
             <td><input type="text" v-model="price"></td>
             <td><input type="text" v-model="quantity"></td>
             <td>
-                <button @click="Delete">X</button>
+                <button @click="Delete(row)">X</button>
                 <button @click="Save">Save</button>
             </td>
         </tr>
@@ -55,8 +56,18 @@ export default {
                 },
             })
         },
-        Delete() {
-            this.row.splice(this.row);
+        Delete(index) {
+            this.edit = false
+            //this.rows.splice(this, 1);
+            /*this.$emit("row-item-deleted", {
+                original: this.row,
+                new : {
+                    title: null,
+                    price: null,
+                    quantity: null
+                },
+            })*/
+            this.$delete(this, index)
         }
     }
 }
