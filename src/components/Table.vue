@@ -4,7 +4,8 @@
       v-for="row in rows"
       v-bind:key="row.title"
       :row="row"
-      />
+      @selected-row-changed="Changed"
+    />
   </table>
 </template>
 
@@ -13,6 +14,13 @@ import TableItem from "./TableItem.vue"
 export default {
   props: ["rows"],
   components: {TableItem},
+  methods: {
+    Changed(e) {
+      TableItem.$emit("selected-title-changed", e)
+      TableItem.$emit("selected-price-changed", e)
+      TableItem.$emit("selected-quantity-changed", e)
+    }
+  }
 }
 </script>
 
